@@ -44,10 +44,9 @@ Paste Token to .env with OPENAI_API_KEY variable.
 ## Get Telegram Bot Token
 
 Open Telegram App and search for [@BotFather](https://t.me/@BotFather)
-Send /newbot to BotFather
-Follow the instruction with BotFather.
+Send /newbot to BotFather and follow the instruction with BotFather.
 
-Finally, Copy Bot Token to .env file with TELEGRAM_API_KEY variable.
+Finally, Copy bot token to .env file with TELEGRAM_API_KEY variable.
 
 ## Run The program
 
