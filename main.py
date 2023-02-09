@@ -7,6 +7,7 @@ import os
 import openai as ai
 from telebot import TeleBot
 from dotenv import load_dotenv
+import time
 
 load_dotenv()
 
@@ -45,7 +46,17 @@ def chatgpt(message):
     chat_dest = message['chat']['id']
     print("ID is: ",message['chat']['id']) # Print the chat ID Of Telegram User
     print("Msg sent: ",message['text']) # Print the message sent by the user
-    user_msg = generate_gpt3_response(message['text'])
+    ## rety if connect to chatgpt is failed
+    while True:
+        try:
+            user_msg = generate_gpt3_response(message['text'])
+            break
+        except:
+            print("Connection to ChatGPT Failed")
+            ## retry after 5 seconds
+            time.sleep(5)
+            continue
+        
     print("Bot Respone: ",user_msg) # Print the response of the ChatGPT
     msg = f"ChatGPT: {user_msg}"
     app.send_message(chat_dest, msg)
