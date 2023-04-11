@@ -1,11 +1,9 @@
 '''
 OpenAI ChatGPT-3.5 To TelegramBot
 '''
-
-
 import os
 import openai
-from telebot import TeleBot
+import telebot
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,23 +19,18 @@ def chatgpt_response(user_message):
     )
     return completion.choices[0].message['content']
 
-app = TeleBot(__name__)
+app = telebot.TeleBot(os.getenv("TELEGRAM_API_KEY"))
 
-@app.route('(?!/).+')
+@app.message_handler(content_types=['text'])
 
 def chatgpt(message):
     '''
     Function to handle the chatgpt bot
     '''
-    chat_dest = message['chat']['id']
-    print("ID is: ",message['chat']['id'])
-    print("Msg sent: ",message['text'])
-    user_msg = chatgpt_response(message['text'])
+    user_msg = chatgpt_response(message.text)
     print("Bot Respone: ",user_msg)
     msg = f"ChatGPT🤖:  {user_msg}"
-    app.send_message(chat_dest, msg)
+    app.reply_to(message, msg, parse_mode='Markdown')
 
 if __name__ == '__main__':
-    app.config['api_key'] = os.getenv("TELEGRAM_API_KEY")
-    app.poll(debug=True)
-    
+    app.polling()
