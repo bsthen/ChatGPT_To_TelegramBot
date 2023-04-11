@@ -28,6 +28,7 @@ def chatgpt(message):
     Function to handle the chatgpt bot
     '''
     user_msg = chatgpt_response(message.text)
+    print("User Message: ",message.text)
     print("Bot Respone: ",user_msg)
     msg = f"ChatGPT🤖:  {user_msg}"
     app.reply_to(message, msg, parse_mode='Markdown')
